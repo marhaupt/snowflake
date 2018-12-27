@@ -6,6 +6,15 @@ class Snowflake {
     this.canvas = document.getElementById('snowflake');
     this.ctx = this.canvas.getContext('2d');
 
+    this.drawBound = this.draw.bind(this);
+
+    // document.addEventListener('click', () => {
+    //   this.setup();
+    // });
+    this.setup();
+  }
+
+  setup() {
     this.size = Math.floor(
       Math.min(window.innerWidth, window.innerHeight) * 0.85
     );
@@ -14,24 +23,31 @@ class Snowflake {
     this.canvas.height = this.size;
     this.canvas.width = this.size;
 
+    this.colors = false;
+
+    // this.ctx.clearRect(-this.size / 2, -this.size / 2, this.size, this.size);
     this.ctx.translate(this.size / 2, this.size / 2);
-    // this.ctx.clearRect(0, 0, this.size, this.size);
+    this.ctx.clearRect(0, 0, this.size, this.size);
     this.ctx.globalAlpha = 0.2;
     this.ctx.fillStyle = '#fff';
-
-    this.colors = false;
 
     const x = random(1, 5);
     const y = random(1, 5);
     const hue = random(0, 360);
-    this.fragments = [{ x, y, hue }];
 
-    this.drawBound = this.draw.bind(this);
+    this.fragments = [
+      {
+        x,
+        y,
+        hue
+      }
+    ];
+
     requestAnimationFrame(this.drawBound);
   }
 
   drawOne(fragment) {
-    if (this.colors) this.ctx.fillStyle = `hsl(${fragment.hue},90%, 75%)`;
+    if (this.colors) this.ctx.fillStyle = `hsl(${fragment.hue},95%, 55%)`;
     this.ctx.beginPath();
     this.ctx.arc(fragment.x, fragment.y, this.radius, 0, Math.PI * 2);
     this.ctx.closePath();
@@ -45,16 +61,19 @@ class Snowflake {
         random(1, Math.min(Math.floor(this.fragments.length / 2), complexity))
       ) || 1;
 
-    // if you go back a lot, the turn can be bigger
+    const aboutLast = last(this.fragments, modifier);
+
     // const bounds = 120 + (40 * modifier) / complexity;
-    const bounds = 100 + modifier * 0.8;
+    // const bounds = 100 + modifier * 0.8;
+    // const bounds = 90 + modifier * 0.2 + (aboutLast.x > this.size / 4 && 30);
+    const bounds = 90 + (aboutLast.x / (this.size / 4)) ** 2 * 30;
 
     const direction = (random(-bounds, bounds) * Math.PI) / 180;
     const distance = this.radius * 2;
 
-    const x = last(this.fragments, modifier).x + Math.cos(direction) * distance;
-    const y = last(this.fragments, modifier).y - Math.sin(direction) * distance;
-    const hue = (last(this.fragments, modifier).hue + random(10, 150)) % 360;
+    const x = aboutLast.x + Math.cos(direction) * distance;
+    const y = aboutLast.y - Math.sin(direction) * distance;
+    const hue = (aboutLast.hue + random(10, 150)) % 360;
 
     return { x, y, hue };
   }
@@ -68,6 +87,7 @@ class Snowflake {
       x: lastOne.x,
       y: -lastOne.y
     };
+
     this.drawOne(mirror);
 
     const step = 360 / 6;
