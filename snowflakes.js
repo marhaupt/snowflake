@@ -6,14 +6,10 @@ class Snowflake {
     this.canvas = document.getElementById('snowflake');
     this.ctx = this.canvas.getContext('2d');
 
-    // 400, 3
     this.size = Math.floor(
       Math.min(window.innerWidth, window.innerHeight) * 0.6
     );
     this.radius = Math.floor((this.size * 1) / 100);
-
-    // this.size = 400;
-    // this.radius = 3;
 
     this.canvas.height = this.size;
     this.canvas.width = this.size;
@@ -65,7 +61,7 @@ class Snowflake {
       this.ctx.rotate(-rotation);
     }
 
-    const complexity = 50;
+    const complexity = 30;
     const modifier =
       Math.floor(
         random(1, Math.min(Math.floor(this.fragments.length / 2), complexity))
@@ -96,8 +92,3 @@ class Snowflake {
 
 // eslint-disable-next-line no-new
 new Snowflake();
-
-// document.getElementById('start').addEventListener('click', () => {
-//   // eslint-disable-next-line no-new
-//   new Snowflake();
-// });
