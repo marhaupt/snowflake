@@ -1,13 +1,11 @@
 {
-  "short_name": "Snowflake",
   "name": "Snowflake Maker",
-  "icons": [{
-    "src": "favicon.png",
-    "sizes": "64x64",
-    "type": "image/png"
-  }],
-  "start_url": "./index.html",
-  "display": "standalone",
+  "short_name": "Snowflake",
   "theme_color": "#43515b",
-  "background_color": "#43515b"
+  "background_color": "#43515b",
+  "display": "minimal-ui",
+  "Scope": "/",
+  "start_url": "/",
+  "icons": null,
+  "splash_pages": null
 }
