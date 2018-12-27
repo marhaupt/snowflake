@@ -7,7 +7,7 @@ class Snowflake {
     this.ctx = this.canvas.getContext('2d');
 
     this.size = Math.floor(
-      Math.min(window.innerWidth, window.innerHeight) * 0.6
+      Math.min(window.innerWidth, window.innerHeight) * 0.85
     );
     this.radius = Math.floor((this.size * 1) / 100);
 
@@ -19,11 +19,10 @@ class Snowflake {
     this.ctx.globalAlpha = 0.2;
     this.ctx.fillStyle = '#fff';
 
-    // this.colors = document.getElementById('colors').checked;
     this.colors = false;
 
-    const x = 15;
-    const y = 5;
+    const x = random(1, 5);
+    const y = random(1, 5);
     const hue = random(0, 360);
     this.fragments = [{ x, y, hue }];
 
@@ -39,9 +38,29 @@ class Snowflake {
     this.ctx.fill();
   }
 
+  generateNext() {
+    const complexity = 30;
+    const modifier =
+      Math.floor(
+        random(1, Math.min(Math.floor(this.fragments.length / 2), complexity))
+      ) || 1;
+
+    // if you go back a lot, the turn can be bigger
+    // const bounds = 120 + (40 * modifier) / complexity;
+    const bounds = 100 + modifier * 0.8;
+
+    const direction = (random(-bounds, bounds) * Math.PI) / 180;
+    const distance = this.radius * 2;
+
+    const x = last(this.fragments, modifier).x + Math.cos(direction) * distance;
+    const y = last(this.fragments, modifier).y - Math.sin(direction) * distance;
+    const hue = (last(this.fragments, modifier).hue + random(10, 150)) % 360;
+
+    return { x, y, hue };
+  }
+
   draw() {
     // this.ctx.clearRect(-this.size / 2, -this.size / 2, this.size, this.size);
-
     const lastOne = last(this.fragments);
     this.drawOne(lastOne);
 
@@ -61,30 +80,11 @@ class Snowflake {
       this.ctx.rotate(-rotation);
     }
 
-    const complexity = 30;
-    const modifier =
-      Math.floor(
-        random(1, Math.min(Math.floor(this.fragments.length / 2), complexity))
-      ) || 1;
+    const next = this.generateNext();
 
-    // if you go back a lot, the turn can be bigger
-    // const bounds = 120 + (40 * modifier) / complexity;
-    const bounds = 100 + modifier * 0.8;
+    this.fragments.push(next);
 
-    const direction = (random(-bounds, bounds) * Math.PI) / 180;
-    const distance = this.radius * 2;
-
-    const x = last(this.fragments, modifier).x + Math.cos(direction) * distance;
-    const y = last(this.fragments, modifier).y - Math.sin(direction) * distance;
-    const hue = (lastOne.hue + random(10, 150)) % 360;
-
-    this.fragments.push({
-      x,
-      y,
-      hue
-    });
-
-    if (x ** 2 + y ** 2 < (this.size / 2 - this.radius) ** 2) {
+    if (next.x ** 2 + next.y ** 2 < (this.size / 2 - this.radius) ** 2) {
       requestAnimationFrame(this.drawBound);
     }
   }
