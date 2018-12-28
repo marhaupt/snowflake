@@ -8,27 +8,32 @@ class Snowflake {
 
     this.drawBound = this.draw.bind(this);
 
-    // document.addEventListener('click', () => {
-    //   this.setup();
-    // });
+    document.getElementById('snowflaker').addEventListener('click', e => {
+      e.preventDefault();
+      this.setup();
+    });
     this.setup();
   }
 
   setup() {
+    // user settings
+    this.complexity = document.getElementById('complexity').value * 1;
+    this.points = document.getElementById('points').value * 1;
+    const dotSize = document.getElementById('dot-size').value / 10;
+    this.colors = document.getElementById('colors').checked;
+
     this.size = Math.floor(
-      Math.min(window.innerWidth, window.innerHeight) * 0.82
+      Math.min(window.innerWidth, window.innerHeight) * 0.8
     );
-    this.radius = Math.floor((this.size * 1) / 100);
+    this.radius = Math.floor((this.size * dotSize) / 100);
 
     this.canvas.height = this.size;
     this.canvas.width = this.size;
 
-    this.colors = false;
-
     // this.ctx.clearRect(-this.size / 2, -this.size / 2, this.size, this.size);
     this.ctx.translate(this.size / 2, this.size / 2);
     this.ctx.clearRect(0, 0, this.size, this.size);
-    this.ctx.globalAlpha = 0.2;
+    this.ctx.globalAlpha = this.colors ? 0.9 : 0.2;
     this.ctx.fillStyle = '#fff';
 
     const x = random(1, 5);
@@ -47,7 +52,7 @@ class Snowflake {
   }
 
   drawOne(fragment) {
-    if (this.colors) this.ctx.fillStyle = `hsl(${fragment.hue},95%, 55%)`;
+    if (this.colors) this.ctx.fillStyle = `hsl(${fragment.hue},85%, 65%)`;
     this.ctx.beginPath();
     this.ctx.arc(fragment.x, fragment.y, this.radius, 0, Math.PI * 2);
     this.ctx.closePath();
@@ -55,10 +60,12 @@ class Snowflake {
   }
 
   generateNext() {
-    const complexity = 30;
     const modifier =
       Math.floor(
-        random(1, Math.min(Math.floor(this.fragments.length / 2), complexity))
+        random(
+          1,
+          Math.min(Math.floor(this.fragments.length / 2), this.complexity)
+        )
       ) || 1;
 
     const aboutLast = last(this.fragments, modifier);
@@ -90,7 +97,7 @@ class Snowflake {
 
     this.drawOne(mirror);
 
-    const step = 360 / 6;
+    const step = 360 / this.points;
 
     for (let deg = step; deg < 360; deg += step) {
       const rotation = (deg * Math.PI) / 180;
@@ -117,3 +124,15 @@ class Snowflake {
 
 // eslint-disable-next-line no-new
 new Snowflake();
+
+function toggleSettings() {
+  document.querySelector('.settings').classList.toggle('hidden');
+}
+
+document
+  .getElementById('settings-show')
+  .addEventListener('click', toggleSettings);
+
+document
+  .getElementById('settings-hide')
+  .addEventListener('click', toggleSettings);
