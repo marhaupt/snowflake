@@ -16,7 +16,7 @@ class Snowflake {
 
   setup() {
     this.size = Math.floor(
-      Math.min(window.innerWidth, window.innerHeight) * 0.85
+      Math.min(window.innerWidth, window.innerHeight) * 0.82
     );
     this.radius = Math.floor((this.size * 1) / 100);
 
@@ -106,6 +106,11 @@ class Snowflake {
 
     if (next.x ** 2 + next.y ** 2 < (this.size / 2 - this.radius) ** 2) {
       requestAnimationFrame(this.drawBound);
+    } else {
+      const link = document.getElementById('dl');
+      link.innerHTML = 'Download';
+      link.href = this.canvas.toDataURL();
+      link.download = 'snowflake.png';
     }
   }
 }

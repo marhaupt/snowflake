@@ -11,14 +11,23 @@ body {
   display: grid;
   box-sizing: border-box;
   padding-top: 6vh;
-  min-height: 90vh;
+  min-height: 85vh;
   align-items: center;
   justify-content: center;
 }
 
-p.author {
+.author {
   text-align: center;
   margin: 1em 0 0 0;
+}
+
+p {
+  margin: 0;
+  height: 1em;
+}
+
+p:first-of-type {
+  margin-bottom: 1em;
 }
 
 a {
