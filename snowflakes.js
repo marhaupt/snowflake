@@ -73,7 +73,7 @@ class Snowflake {
     // const bounds = 120 + (40 * modifier) / complexity;
     // const bounds = 100 + modifier * 0.8;
     // const bounds = 90 + modifier * 0.2 + (aboutLast.x > this.size / 4 && 30);
-    const bounds = 90 + (aboutLast.x / (this.size / 4)) ** 2 * 30;
+    const bounds = 90 + (aboutLast.x / this.size) ** 2 * 30;
 
     const direction = (random(-bounds, bounds) * Math.PI) / 180;
     const distance = this.radius * 2;
