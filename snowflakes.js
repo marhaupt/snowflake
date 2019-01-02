@@ -20,7 +20,7 @@ class Snowflake {
     this.complexity = document.getElementById('complexity').value * 1;
     this.points = document.getElementById('points').value * 1;
     const dotSize = document.getElementById('dot-size').value / 10;
-    this.colors = document.getElementById('colors').checked;
+    this.colors = document.getElementById('toggle-colors').checked;
 
     this.size = Math.floor(
       Math.min(window.innerWidth, window.innerHeight) * 0.8
@@ -118,6 +118,7 @@ class Snowflake {
       link.innerHTML = 'Download';
       link.href = this.canvas.toDataURL();
       link.download = 'snowflake.png';
+      link.classList.remove('disabled');
     }
   }
 }

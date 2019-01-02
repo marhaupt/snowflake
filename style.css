@@ -36,7 +36,6 @@ canvas {
 
 p {
   margin: 0;
-  height: 1em;
 }
 
 .author p:first-of-type {
@@ -74,6 +73,8 @@ a {
   padding: 3rem;
   font-size: 1rem;
   display: grid;
+  text-align: center;
+  min-width: 13em;
 }
 
 .settings-toggle-container {
@@ -124,5 +125,60 @@ input[type="number"] {
   box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.4);
   text-decoration: none;
   display: inline-block;
-  margin: 1em 0;
+  margin: 0.5em 0;
+}
+
+.disabled {
+  cursor: default;
+  box-shadow: none;
+  background-color: transparent;
+  color: #d8d9da;
+}
+
+.snowflaker {
+  margin-top: 1em;
+}
+
+.toggle {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+.toggle+label {
+  background-color: #d8d9da;
+  height: 1em;
+  width: 1.6em;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 0.5em;
+  transition: all 200ms ease-in-out;
+  position: relative;
+  margin: 0 0.4em;
+  transform: translateY(0.2em)
+}
+
+.toggle+label:after {
+  --size: 0.8em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: var(--size);
+  height: var(--size);
+  background-color: #3e474d;
+  border-radius: calc(var(--size)/2);
+  transition: all 200ms ease-in-out;
+  transform: translate(calc((1em - var(--size))/2),
+    calc((1em - var(--size))/2));
+}
+
+.toggle:checked+label {
+  background-color: #a3ed5a;
+}
+
+.toggle:checked+label:after {
+  transform: translate(calc((1.6em - var(--size)) - (1em - var(--size))/2),
+    calc((1em - var(--size))/2));
 }
