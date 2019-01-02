@@ -142,8 +142,7 @@ document
   .getElementById('settings-hide')
   .addEventListener('click', toggleSettings);
 
-// TODO: change to <main> maybe in future
-document.getElementById('snowflake').addEventListener('click', () => {
+document.querySelector('main').addEventListener('click', () => {
   if (!document.querySelector('.settings').classList.contains('hidden')) {
     toggleSettings();
   }
