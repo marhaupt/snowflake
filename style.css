@@ -1,12 +1,18 @@
 html {
   height: 100%;
+  --color-grey-200: #3e474d;
+  --color-grey-400: #50616d;
+  --color-grey-600: #6e7780;
+  --color-grey-800: #d8d9da;
+  --color-grey-900: #f9fafb;
+  --color-focus: #a3ed5a;
 }
 
 body {
   margin: 0;
-  background-color: #50616d;
+  background-color: var(--color-grey-400);
   background-image: linear-gradient(135deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-  color: #d8d9da;
+  color: var(--color-grey-800);
   font-family: sans-serif;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -43,12 +49,12 @@ p {
 }
 
 a {
-  color: #fafafa
+  color: var(--color-grey-900);
 }
 
 
 .settings {
-  background-color: #3e474d;
+  background-color: var(--color-grey-200);
   position: fixed;
   /* top: 0; */
   height: 100vh;
@@ -94,7 +100,7 @@ button {
 }
 
 button svg {
-  fill: #d8d9da;
+  fill: var(--color-grey-800);
   height: 2rem;
 }
 
@@ -105,18 +111,24 @@ button:focus {
 input[type="number"] {
   background-color: transparent;
   color: currentColor;
-  padding: 0.5rem;
   font-size: 1em;
-  width: 3.5em;
-  text-align: center;
-  border: 2px solid #6e7780;
+  width: 2.2em;
+  padding: 0.5em 1em;
+  /* text-align: center; */
+  border: 2px solid var(--color-grey-600);
   border-radius: 1em;
   margin: 0.5em 0 1em 0;
+  transition: all 150ms ease-in-out;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-focus);
 }
 
 .text-button {
-  background-color: #d8d9da;
-  color: #3e474d;
+  background-color: var(--color-grey-800);
+  color: var(--color-grey-200);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   /* font-weight: bold; */
@@ -132,7 +144,7 @@ input[type="number"] {
   cursor: default;
   box-shadow: none;
   background-color: transparent;
-  color: #d8d9da;
+  color: var(--color-grey-800);
 }
 
 .snowflaker {
@@ -147,7 +159,7 @@ input[type="number"] {
 }
 
 .toggle+label {
-  background-color: #d8d9da;
+  background-color: var(--color-grey-800);
   height: 1em;
   width: 1.6em;
   display: inline-block;
@@ -167,7 +179,7 @@ input[type="number"] {
   content: '';
   width: var(--size);
   height: var(--size);
-  background-color: #3e474d;
+  background-color: var(--color-grey-200);
   border-radius: calc(var(--size)/2);
   transition: all 200ms ease-in-out;
   transform: translate(calc((1em - var(--size))/2),
@@ -175,10 +187,16 @@ input[type="number"] {
 }
 
 .toggle:checked+label {
-  background-color: #a3ed5a;
+  background-color: var(--color-focus);
 }
 
 .toggle:checked+label:after {
   transform: translate(calc((1.6em - var(--size)) - (1em - var(--size))/2),
     calc((1em - var(--size))/2));
+}
+
+h3 {
+  margin: 0.8em 0 0.2em 0;
+  font-size: 1.1em;
+  font-weight: normal;
 }
