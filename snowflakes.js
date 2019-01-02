@@ -22,6 +22,10 @@ class Snowflake {
     const dotSize = document.getElementById('dot-size').value / 10;
     this.colors = document.getElementById('toggle-colors').checked;
 
+    const link = document.getElementById('dl');
+    link.innerHTML = 'generating...';
+    link.classList.add('disabled');
+
     this.size = Math.floor(
       Math.min(window.innerWidth, window.innerHeight) * 0.8
     );
