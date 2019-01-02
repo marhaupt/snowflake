@@ -31,6 +31,10 @@ class Snowflake {
     );
     this.radius = Math.floor((this.size * dotSize) / 100);
 
+    if (this.radius < 1) {
+      this.radius = 1;
+    }
+
     this.canvas.height = this.size;
     this.canvas.width = this.size;
 
