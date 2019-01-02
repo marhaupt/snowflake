@@ -125,7 +125,7 @@ class Snowflake {
       const link = document.getElementById('dl');
       link.innerHTML = 'Download';
       link.href = this.canvas.toDataURL();
-      link.download = 'snowflake.png';
+      link.download = `snowflake${new Date().getTime()}.png`;
       link.classList.remove('disabled');
     }
   }
@@ -151,3 +151,16 @@ document.querySelector('main').addEventListener('click', () => {
     toggleSettings();
   }
 });
+
+// Preventing incorrect values
+function correctInput(id, event, value) {
+  const element = document.getElementById(id);
+
+  element.addEventListener(event, () => {
+    if (element.value * 1 < value) element.value = value;
+  });
+}
+
+correctInput('complexity', 'change', 1);
+correctInput('points', 'change', 1);
+correctInput('dot-size', 'change', 1);
